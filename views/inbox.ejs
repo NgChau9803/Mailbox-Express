@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Inbox</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #fafafa;
+      margin: 0;
+      padding: 0;
+      color: #444;
+    }
+    
+    header {
+      background-color: #f39c12; 
+      color: #fff;
+      padding: 20px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 8px;
+    }
+    
+    header h1 {
+      margin: 0;
+      font-size: 1.75rem;
+      font-family: 'Open Sans', sans-serif; 
+    }
+    
+    nav ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    nav li {
+      margin-right: 20px;
+    }
+    
+    nav a {
+      text-decoration: none;
+      color: #f39c12; 
+      font-weight: bold;
+    }
+    
+    main {
+      width: 100%;
+      margin: 20px auto;
+      background-color: #fff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+      padding: 20px;
+      border-radius: 8px; 
+    }
+    
+    h2 {
+      color: #000000; 
+    }
+    
+    .body-wrapper {
+      display: flex;
+      margin-top: 20px;
+    }
+    
+    .body-wrapper nav {
+      flex-basis: 20%;
+      padding: 20px; 
+      border-right: 1px solid #ddd; 
+    }
+    
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    
+    li {
+      border-bottom: 1px solid #eee; 
+      padding: 15px;
+      transition: background-color 0.3s;
+      cursor: pointer;
+      border-radius: 5px; 
+    }
+    
+    li:hover {
+      background-color: #f9f9f9;
+    }
+    
+    strong {
+      font-weight: bold;
+    }
+    
+    .pagination {
+      display: flex;
+      list-style: none;
+      padding: 0;
+      margin-top: 20px;
+    }
+    
+    .pagination a {
+      margin: 0 5px;
+      padding: 5px 10px;
+      text-decoration: none;
+      color: #333;
+      background-color: #eee; 
+      border: none;
+      border-radius: 5px; 
+    }
+    .delete-button {
+      background-color: #e74c3c;
+      color: #fff;
+      padding: 8px 15px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Welcome, <%= fullName %></h1>
+    <a href="/signout">Sign Out</a>
+  </header>
+  <div class="body-wrapper">
+    <nav>
+      <ul>
+        <li><a href="/compose">Compose</a></li>
+        <li><a href="/inbox">Inbox</a></li>
+        <li><a href="/outbox">Outbox</a></li>
+      </ul>
+    </nav>
+  <main>
+      <h2>Inbox</h2>
+      <% if (inbox.length > 0) { %>
+        <ul>
+          <% inbox.forEach(email => { %>
+            <li>
+              <div>
+                <input type="checkbox" class="email-checkbox" name="selectedEmails" value="<%= email.id %>">
+                <strong><%= email.senderName %></strong>
+                <p><a href="/email/<%= email.id %>"><%= email.subject %></a></p>
+                <p><%= email.timeReceived.toLocaleString('en-US', { year: 'numeric', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit' }) %></p>
+              </div>
+            </li>
+          <% }); %>
+        </ul>
+        <button class="delete-button" onclick="deleteSelectedEmails()">Delete</button>
+        <div class="pagination">
+          <% for (let i = 1; i <= totalPages; i++) { %>
+            <a href="/inbox?page=<%= i %>" <%= currentPage === i ? 'class="active"' : '' %>><%= i %></a>
+          <% } %>
+        </div>
+      <% } else { %>
+        <p>No emails in the inbox.</p>
+      <% } %>
+  </main>
+</div>
+
+  <script>
+    function deleteSelectedEmails() {
+      const selectedEmails = document.querySelectorAll('input[name="selectedEmails"]:checked');
+      const emailIds = Array.from(selectedEmails).map(email => email.value);
+      const requestBody = {
+            emailIds,
+            object: "receiver_id",
+      };
+      fetch('/api/delete-emails', {
+        method: 'POST',
+        body: JSON.stringify(requestBody),
+        headers: { 'Content-Type': 'application/json' }
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.success) {
+          window.location.reload();
+        } else {
+          console.error(data.error);
+        }
+      })
+      .catch(error => {
+        console.error(error);
+      });
+    }
+  </script>
+</body>
+</html>

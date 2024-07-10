@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome</title>
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f2f6fa;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+    
+    .container {
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      padding: 20px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    }
+    
+    h1 {
+      color: #0e0c16; 
+      margin-bottom: 20px;
+      font-size: 2.2em;
+    }
+    
+    p {
+      color: #555;
+      margin-bottom: 15px;
+      font-size: 1.4em;
+    }
+    
+    a {
+      color: #f39c12; 
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1em;
+    }
+    
+    a:hover {
+      text-decoration: underline;
+    }
+    
+  </style>
+</head>
+<body>
+    <% if (fullname) { %>
+        <h1>Welcome <%= fullname %></h1>
+      <% } else { %>
+        <h1>Welcome Guest</h1>
+      <% } %>
+  <p>Go to <a href="/">Sign in</a> page.</p>
+</body>
+</html>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign up</title>
+    <style>
+      body {
+        font-family: "Press Start 2P", sans-serif;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        filter: dither(); 
+      }
+
+      h1 {
+        text-align: center;
+        color:#f39c12;
+        margin-bottom: 20px;
+        font-size: 2em;
+        filter: pixelate(2px); 
+      }
+
+      form {
+        background-color: #fff;
+        padding: 30px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+        width: 400px; 
+        margin: 0 auto;
+        filter: pixelate(2px); 
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        color: #444;
+        font-size: 16px;
+      }
+
+      input {
+        width: 100%;
+        padding: 15px; 
+        margin-bottom: 20px;
+        box-sizing: border-box;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        filter: pixelate(2px); 
+      }
+
+      button {
+        background-color: #f39c12;
+        color: #fff;
+        padding: 15px; 
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        box-sizing: border-box;
+        transition: background-color 0.3s;
+        filter: pixelate(2px); 
+      }
+
+      button:hover {
+        background-color: #0b1402;
+      }
+
+      p {
+        text-align: center;
+        margin-top: 16px;
+        color: #555;
+        font-size: 14px;
+      }
+
+      a {
+        color: #f39c12;
+        text-decoration: none;
+      }
+
+      a:hover {
+        text-decoration: underline;
+      }
+
+      .error-message {
+        color: #9d38bd;
+        text-align: center;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Sign up</h1>
+    <form action="/signup" method="post">
+      <label>Fullname</label>
+      <input type="text" name="fullname" />
+      <label>Username</label>
+      <input type="text" name="username" />
+      <label>Email:</label>
+      <input type="text" name="email" />
+      <label>Password</label>
+      <input type="password" name="password" />
+      <label>Re-enter Password</label>
+      <input type="password" name="reEnterPassword" />
+      <button type="submit">Sign up</button>
+      <% if (errMessage) { %>
+      <p class="error-message"><%= errMessage %></p>
+      <% } %>
+    </form>
+    <p>Already have an account? <a href="/">Sign in</a></p>
+  </body>
+</html>

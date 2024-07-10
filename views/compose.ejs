@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Compose Email</title>
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #fafafa;
+        margin: 0;
+        padding: 0;
+        color: #444;
+      }
+      
+      header {
+        background-color: #f39c12; 
+        color: #fff;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-radius: 8px;
+      }
+      
+      header h1 {
+        margin: 0;
+        font-size: 1.75rem;
+        font-family: 'Open Sans', sans-serif; 
+      }
+      
+      nav ul {
+        list-style: none;
+        padding: 0;
+      }
+      
+      nav li {
+        margin-right: 20px;
+      }
+      
+      nav a {
+        text-decoration: none;
+        color: #f39c12; 
+        font-weight: bold;
+      }
+      
+      main {
+        width: 100%;
+        margin: 20px auto;
+        background-color: #fff;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+        padding: 20px;
+        border-radius: 8px; 
+      }
+      
+      h2 {
+        color: #f39c12; 
+      }
+      
+      .body-wrapper {
+        display: flex;
+        margin-top: 20px;
+      }
+      
+      .body-wrapper nav {
+        flex-basis: 20%;
+        padding: 20px; 
+        border-right: 1px solid #ddd; 
+      }
+      
+      ul {
+        list-style: none;
+        padding: 0;
+      }
+      
+      li {
+        border-bottom: 1px solid #eee; 
+        padding: 15px;
+        transition: background-color 0.3s;
+        cursor: pointer;
+        border-radius: 5px; 
+      }
+      
+      li:hover {
+        background-color: #f9f9f9;
+      }
+      
+      strong {
+        font-weight: bold;
+      }
+      
+      .pagination {
+        display: flex;
+        list-style: none;
+        padding: 0;
+        margin-top: 20px;
+      }
+      
+      .pagination a {
+        margin: 0 5px;
+        padding: 5px 10px;
+        text-decoration: none;
+        color: #333;
+        background-color: #eee; 
+        border: none;
+        border-radius: 5px; 
+      }
+
+      form {
+        margin: 20px auto;
+        width: 100%;
+        max-width: 800px;
+        border-radius: 8px;
+        background-color: #fff;
+        padding: 20px;
+        border: 1px solid #ddd;
+      }
+
+      label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+      }
+
+      input[type="text"],
+      input[type="email"],
+      textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 20px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+      }
+
+      button {
+        background-color: #f39c12;
+        color: #fff;
+        padding: 15px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        width: 100%;
+        margin-top: 20px;
+        font-size: 1rem;
+      }
+
+      button:hover {
+        background-color: #e68900;
+      }
+
+      p {
+        text-align: center;
+        margin-top: 16px;
+        color: #555;
+      }
+
+      .success-message {
+        color: green;
+        text-align: center;
+      }
+
+      .error-message {
+        color: red;
+        text-align: center;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <h1 class="fullname">Welcome, <%= fullName %></h1>
+      <a href="/signout">Sign Out</a>
+    </header>
+    <div class="body-wrapper">
+      <nav>
+        <ul>
+          <li><a href="/compose">Compose</a></li>
+          <li><a href="/inbox">Inbox</a></li>
+          <li><a href="/outbox">Outbox</a></li>
+        </ul>
+      </nav>
+    </header>
+    <main>
+      <h1>Compose Email</h1>
+      <form action="/compose" method="post" enctype="multipart/form-data">
+        <label for="recipient">Recipient:</label>
+        <select name="recipient" id="recipient">
+          <% users.forEach(user => { %>
+            <option value="<%= user.id %>"><%= user.fullname %></option>
+          <% }); %>
+        </select>
+        <br />
+  
+        <label for="subject">Subject:</label>
+        <input type="text" name="subject" id="subject" />
+        <br />
+  
+        <label for="body">Body:</label>
+        <textarea name="body" id="body"></textarea>
+        <br />
+  
+        <label for="attachment">Attachment:</label>
+        <input type="file" name="attachment" id="attachment" />
+        <br />
+  
+        <button type="submit">Send Email</button>
+      </form>
+      <% if (errMessage) { %>
+        <p class="error-message"><%= errMessage %></p>
+      <% } else if (successMessage) { %>
+        <p class="success-message"><%= successMessage %></p>
+      <% } %>
+    </main>
+  </body>
+</html>
