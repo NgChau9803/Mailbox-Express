@@ -1,8 +1,7 @@
-
-📧 Mailbox-Express
+# 📧 Mailbox-Express
 A modern web application that meticulously replicates the core functionality and user interface of Gmail. This project serves as a showcase of full-stack development skills, demonstrating a robust understanding of frontend frameworks, backend APIs, and database management.
 
-✨ Features
+# ✨ Features
 User Authentication: Secure sign-up and login functionality.
 
 Compose and Send Emails: A rich text editor for creating and sending new messages.
@@ -15,7 +14,7 @@ Categorized Folders: Organize emails into folders such as Inbox, Sent, Drafts, a
 
 Responsive Design: A seamless experience on both desktop and mobile devices.
 
-🚀 Technologies Used
+# 🚀 Technologies Used
 Frontend
 
 EJS: A simple templating language for building user interfaces.
